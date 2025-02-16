@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedConversion</title>
+    <link rel="icon" type="image/png" href="conversion.svg">
+    <link rel="stylesheet" href="more_meserment.css">
+</head>
+
+<body>
+
+    <div class="mainbox">
+
+        <h1>Measurement Conversion</h1>
+
+        <div class="nav-container">
+            <nav>
+                <a href="more_meserment.html">Area</a>
+                <a href="lenght.html">Length</a>
+                <a href="temprature.html">Temperature</a>
+                <a href="mass.html">Mass</a>
+                <a href="data.html">Data</a>
+                <a href="#">Speed</a>
+                <a href="time.html">Time</a>
+            </nav>
+        </div>
+
+        <h3>Speed Conversion</h3>
+        <label for="from-speed">From</label>
+        <select id="from-speed">
+            <option value="none">Select</option>
+            <option value="meteres per second">Meteres per second (m/s)</option>
+            <option value="meteres per hours">Meteres per hours (m/h)</option>
+            <option value="kilomerters per second">Kilomerters per second (km/s)</option>
+            <option value="kilomerters per hours">Kilomerters per hours (km/h)</option>
+            <option value="inches per second">Inches per second (in/s)</option>
+            <option value="inches per hours">Inches per hours (in/h)</option>
+            <option value="feet per second">Feet per second (ft/s)</option>
+            <option value="feet per hours">Feet per hours (ft/h)</option>
+            <option value="miles per second">Miles per second (mi/s)</option>
+            <option value="miles per hours">Miles per hours (mi/h)</option>
+            <option value="knots">Knots (kn)</option>
+        </select>
+
+        <label for="to-speed">To</label>
+        <select id="to-speed">
+            <option value="none">Select</option>
+            <option value="meteres per second">Meteres per second (m/s)</option>
+            <option value="meteres per hours">Meteres per hours (m/h)</option>
+            <option value="kilomerters per second">Kilomerters per second (km/s)</option>
+            <option value="kilomerters per hours">Kilomerters per hours (km/h)</option>
+            <option value="inches per second">Inches per second (in/s)</option>
+            <option value="inches per hours">Inches per hours (in/h)</option>
+            <option value="feet per second">Feet per second (ft/s)</option>
+            <option value="feet per hours">Feet per hours (ft/h)</option>
+            <option value="miles per second">Miles per second (mi/s)</option>
+            <option value="miles per hours">Miles per hours (mi/h)</option>
+            <option value="knots">Knots (kn)</option>
+            </select>
+
+        <input type="number" class="input" placeholder="Enter a value">
+        <button onclick="convertSpeed()">Convert</button>
+        <input type="text" class="output" readonly placeholder="Result">
+    </div>
+
+    <script src="more_messerment.js"></script>
+</body>
+
+</html>

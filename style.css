@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.calculator {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90vw; /* Take 90% of viewport width */
+    height: 95vh; /* Take 95% of viewport height */
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.img img {
+    height: 50px;
+    width: auto;
+}
+
+.calculator-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+button img {
+    width: 20px;
+    height: 20px;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.button {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+button {
+    flex: 1; /* Make buttons grow to fill available space */
+    min-width: 20%;
+    height: 10vh; /* Adjust button height relative to viewport */
+    font-size: 4vw; /* Adjust font size relative to viewport width */
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 50%;
+}
+
+button:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.05);
+}
+
+.result-display {
+    width: 100%;
+    height: 8vh; /* Adjust height relative to viewport */
+    font-size: 3vw; /* Adjust font size relative to viewport */
+    text-align: right;
+    padding: 5px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f3f0f0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.result-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}

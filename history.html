@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculation History</title>
+    <link rel="icon" type="image/png" href="cal.svg">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+
+        .history-container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            font-size: 16px;
+            border: none;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border-radius: 8px;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="history-container">
+        <h1>Calculation History</h1>
+        <ul id="history-list">
+            <!-- History items will be populated dynamically -->
+        </ul>
+        <button onclick="clearHistory()">Clear History</button>
+        <button onclick="goBack()">Go Back</button>
+    </div>
+
+    <script>
+        // Display the history when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedHistory = JSON.parse(localStorage.getItem('calcHistory')) || [];
+            const historyList = document.getElementById('history-list');
+
+            if (storedHistory.length === 0) {
+                // If no history, show a message
+                const message = document.createElement('li');
+                message.textContent = 'No history available.';
+                historyList.appendChild(message);
+            } else {
+                // Populate the history list
+                storedHistory.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    historyList.appendChild(li);
+                });
+            }
+        });
+
+        // Function to clear history
+        function clearHistory() {
+            localStorage.removeItem('calcHistory'); // Clear history from storage
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = ''; // Clear history display
+
+            const message = document.createElement('li');
+            message.textContent = 'No history available.';
+            historyList.appendChild(message);
+        }
+
+        // Function to navigate back to the calculator
+        function goBack() {
+            window.location.href = 'index.html'; // Navigate back to the calculator
+        }
+    </script>
+</body>
+</html>

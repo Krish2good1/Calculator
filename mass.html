@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mass Conversion</title>
+    <link rel="icon" type="image/png" href="conversion.svg">
+    <link rel="stylesheet" href="more_meserment.css">
+</head>
+
+<body>
+
+    <div class="mainbox">
+
+        <h1>Measurement Conversion</h1>
+
+        <div class="nav-container">
+            <nav>
+                <a href="more_meserment.html">Area</a>
+                <a href="lenght.html">Length</a>
+                <a href="temprature.html">Temperature</a>
+                <a href="#">Mass</a>
+                <a href="data.html">Data</a>
+                <a href="speed.html">Speed</a>
+                <a href="time.html">Time</a>
+            </nav>
+        </div>
+
+        <h3>Mass Conversion</h3>
+        <label for="from-mass">From</label>
+        <select id="from-mass">
+            <option value="none">Select</option>
+            <option value="tons">Tons (t)</option>
+            <option value="pounds">Pounds (lb)</option>
+            <option value="kilogram">Kilogram (KG)</option>
+            <option value="grams">Grams (g)</option>
+        </select>
+
+        <label for="to-mass">To</label>
+        <select id="to-mass">
+            <option value="none">Select</option>
+            <option value="tons">Tons (t)</option>
+            <option value="pounds">Pounds (lb)</option>
+            <option value="kilogram">Kilogram (KG)</option>
+            <option value="grams">Grams (g)</option>
+        </select>
+
+        <input type="number" class="input" placeholder="Enter a value">
+        <button onclick="convertMass()">Convert</button>
+        <input type="text" class="output" readonly placeholder="Result">
+    </div>
+
+    <script src="more_messerment.js"></script>
+</body>
+
+</html>
