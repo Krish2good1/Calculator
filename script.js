@@ -12,20 +12,34 @@ function clearResult() {
 function calculateResult() {
     const result = document.getElementById('result');
     try {
-        const calculation = result.value;
-        const calcResult = eval(calculation); // Evaluate the string as a mathematical expression
+        const calculation = result.value.trim();
+        if (!calculation) {
+            throw new Error("Input is empty");
+        }
+        if (!/^[0-9+\-*/().% ]+$/.test(calculation)) {
+            throw new Error("Invalid characters in input");
+        }
+
+        const calcResult = eval(calculation); // Evaluate the expression
         result.value = calcResult;
 
         // Save to history in localStorage
-        const currentHistory = JSON.parse(localStorage.getItem('calcHistory')) || [];
+        let currentHistory = [];
+        try {
+            const storedHistory = localStorage.getItem('calcHistory');
+            if (storedHistory) {
+                currentHistory = JSON.parse(storedHistory);
+            }
+        } catch (error) {
+            console.error("Error reading history from localStorage:", error);
+        }
         currentHistory.push(`${calculation} = ${calcResult}`);
         localStorage.setItem('calcHistory', JSON.stringify(currentHistory));
     } catch (error) {
-        alert('Invalid input');
+        alert('Invalid input: ' + error.message);
         clearResult();
     }
 }
-
 
 function addHistory(calculation, result) {
     history.push(`${calculation} = ${result}`);
@@ -61,8 +75,7 @@ function navigateToHistoryPage() {
     window.location.href = 'history.html'; // Navigate to the history page
 }
 
-
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     const result = document.getElementById('result');
     if (!result) return;
 
