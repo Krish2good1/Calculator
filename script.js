@@ -1,3 +1,6 @@
+// Array to hold the calculation history in memory
+let history = [];
+
 function appendValue(value) {
     const result = document.getElementById('result');
     result.value += value;
@@ -20,9 +23,42 @@ function calculateResult() {
 
         const calcResult = eval(calculation); // Evaluate the expression
         result.value = calcResult;
+
+        // Add to in-memory history
+        addHistory(calculation, calcResult);
+
+        // Save to localStorage
+        let currentHistory = [];
+        try {
+            const storedHistory = localStorage.getItem('calcHistory');
+            if (storedHistory) {
+                currentHistory = JSON.parse(storedHistory);
+            }
+        } catch (error) {
+            console.error("Error reading history from localStorage:", error);
+        }
+        currentHistory.push(`${calculation} = ${calcResult}`);
+        localStorage.setItem('calcHistory', JSON.stringify(currentHistory));
     } catch (error) {
         alert('Invalid input: ' + error.message);
         clearResult();
+    }
+}
+
+function addHistory(calculation, result) {
+    history.push(`${calculation} = ${result}`);
+    displayHistory();
+}
+
+function displayHistory() {
+    const historyList = document.getElementById('history-list');
+    if (historyList) {
+        historyList.innerHTML = '';
+        history.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            historyList.appendChild(li);
+        });
     }
 }
 
@@ -35,6 +71,12 @@ function toggleSign() {
             result.value = '-' + result.value;
         }
     }
+}
+
+function navigateToHistoryPage() {
+    // Save the history to localStorage before navigating
+    localStorage.setItem('calcHistory', JSON.stringify(history));
+    window.location.href = 'history.html'; // Navigate to the history page
 }
 
 document.addEventListener('keydown', function (event) {
