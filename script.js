@@ -20,41 +20,44 @@ function calculateResult() {
             throw new Error("Invalid characters in input");
         }
 
-        const calcResult = eval(calculation); // Evaluate the expression
+        const calcResult = eval(calculation); // Safely evaluate the expression
         result.value = calcResult;
 
         // Save to history in localStorage
-        let currentHistory = [];
-        try {
+        if (typeof localStorage !== 'undefined') {
+            let currentHistory = [];
             const storedHistory = localStorage.getItem('calcHistory');
             if (storedHistory) {
                 currentHistory = JSON.parse(storedHistory);
             }
-        } catch (error) {
-            console.error("Error reading history from localStorage:", error);
+            currentHistory.push(`${calculation} = ${calcResult}`);
+            localStorage.setItem('calcHistory', JSON.stringify(currentHistory));
+        } else {
+            console.warn("LocalStorage is not available.");
         }
-        currentHistory.push(`${calculation} = ${calcResult}`);
-        localStorage.setItem('calcHistory', JSON.stringify(currentHistory));
     } catch (error) {
         alert('Invalid input: ' + error.message);
         clearResult();
     }
 }
 
-function addHistory(calculation, result) {
-    history.push(`${calculation} = ${result}`);
-    displayHistory();
-}
-
 function displayHistory() {
     const historyList = document.getElementById('history-list');
     if (historyList) {
         historyList.innerHTML = '';
-        history.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = item;
-            historyList.appendChild(li);
-        });
+        try {
+            const storedHistory = localStorage.getItem('calcHistory');
+            if (storedHistory) {
+                const parsedHistory = JSON.parse(storedHistory);
+                parsedHistory.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    historyList.appendChild(li);
+                });
+            }
+        } catch (error) {
+            console.error("Error reading history from localStorage:", error);
+        }
     }
 }
 
@@ -70,8 +73,6 @@ function toggleSign() {
 }
 
 function navigateToHistoryPage() {
-    // Save the history to localStorage before navigating
-    localStorage.setItem('calcHistory', JSON.stringify(history));
     window.location.href = 'history.html'; // Navigate to the history page
 }
 
@@ -84,6 +85,7 @@ document.addEventListener('keydown', function (event) {
     } else if (['+', '-', '*', '/'].includes(event.key)) {
         appendValue(event.key);
     } else if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent form submission
         calculateResult();
     } else if (event.key === 'Backspace') {
         result.value = result.value.slice(0, -1);
@@ -91,5 +93,7 @@ document.addEventListener('keydown', function (event) {
         appendValue('.');
     } else if (event.key === 'Escape') {
         clearResult();
+    } else {
+        console.warn("Unsupported key: ", event.key);
     }
 });
