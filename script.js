@@ -1,4 +1,6 @@
-let history = [];
+if (typeof localStorage === 'undefined' || localStorage === null) {
+    alert('localStorage is not supported in this browser or environment.');
+}
 
 function appendValue(value) {
     const result = document.getElementById('result');
@@ -20,20 +22,26 @@ function calculateResult() {
             throw new Error("Invalid characters in input");
         }
 
-        const calcResult = eval(calculation); // Safely evaluate the expression
+        let calcResult = null;
+        try {
+            calcResult = eval(calculation);
+        } catch (error) {
+            throw new Error("Failed to evaluate the expression.");
+        }
+
         result.value = calcResult;
 
-        // Save to history in localStorage
-        if (typeof localStorage !== 'undefined') {
-            let currentHistory = [];
+        // Save to history
+        let currentHistory = [];
+        try {
             const storedHistory = localStorage.getItem('calcHistory');
             if (storedHistory) {
-                currentHistory = JSON.parse(storedHistory);
+                currentHistory = JSON.parse(storedHistory) || [];
             }
             currentHistory.push(`${calculation} = ${calcResult}`);
             localStorage.setItem('calcHistory', JSON.stringify(currentHistory));
-        } else {
-            console.warn("LocalStorage is not available.");
+        } catch (error) {
+            console.error("Error saving to localStorage:", error);
         }
     } catch (error) {
         alert('Invalid input: ' + error.message);
@@ -73,7 +81,7 @@ function toggleSign() {
 }
 
 function navigateToHistoryPage() {
-    window.location.href = 'history.html'; // Navigate to the history page
+    window.location.href = 'history.html';
 }
 
 document.addEventListener('keydown', function (event) {
@@ -85,7 +93,7 @@ document.addEventListener('keydown', function (event) {
     } else if (['+', '-', '*', '/'].includes(event.key)) {
         appendValue(event.key);
     } else if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent form submission
+        event.preventDefault();
         calculateResult();
     } else if (event.key === 'Backspace') {
         result.value = result.value.slice(0, -1);
@@ -93,7 +101,5 @@ document.addEventListener('keydown', function (event) {
         appendValue('.');
     } else if (event.key === 'Escape') {
         clearResult();
-    } else {
-        console.warn("Unsupported key: ", event.key);
     }
 });
